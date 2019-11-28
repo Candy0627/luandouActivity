@@ -7,6 +7,9 @@
       
       <div id="container">
         <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
         <video id="video" src="/static/videos/video.mp4" controls></video>
         <!-- <video id="video" src="https://cs.gamemorefun.net/media/myVideo.mp4" controls width="100%" height="100%"></video> -->
       </div>
@@ -209,12 +212,37 @@ export default {
         i{
             display: block
             position: absolute
-            width:6.5rem
-            height :3.89rem
-            top: -0.25rem
-            left: -0.05rem
-            background: url('/static/images/video_bg.png') no-repeat;
-            background-size: 100% 100%;
+            z-index :1
+            &:nth-child(1){
+                width:6.5rem
+                height :.4rem
+                top: -.25rem
+                background: url('/static/images/v_t.png') no-repeat
+                background-size: 100% 100%
+            }
+            &:nth-child(2){
+                width:6.39rem
+                height :.23rem
+                bottom:.1rem
+                background: url('/static/images/v_b.png') no-repeat
+                background-size: 100% 100%
+            }
+            &:nth-child(3){
+                width:.15rem
+                height :3.25rem
+                top:.1rem
+                left:0
+                background: url('/static/images/v_l.png') no-repeat
+                background-size: 100% 100%
+            }
+            &:nth-child(4){
+                width:.15rem
+                height :3.25rem
+                top:.1rem
+                right:0
+                background: url('/static/images/v_r.png') no-repeat
+                background-size: 100% 100%
+            }
         }
       em {
         width: 0.63rem;

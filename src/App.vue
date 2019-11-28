@@ -1,11 +1,7 @@
 <template>
     <div id="app">
         <home-topnav @openTopMenu="openTopMenu"></home-topnav>
-        <home-topmenu
-            :isTopMenu="isTopMenu"
-            :options="options"
-            @openLoginDialog="openLoginDialog"
-        ></home-topmenu>
+        <home-topmenu :isTopMenu="isTopMenu" :options="options" @openLoginDialog="openLoginDialog"></home-topmenu>
         <home-botnav :isBotNav="isBotNav"></home-botnav>
         <home-mask :isMaskShow="isMaskShow"></home-mask>
         <home-logindialog
@@ -51,6 +47,7 @@
             @getHeroId="getHeroId"
             @openGetRewardlogDialog="openGetRewardlogDialog"
             @glodFbShare="glodFbShare"
+            @glodGetReward="glodGetReward"
         ></router-view>
         <!-- <router-view/> -->
     </div>
@@ -115,11 +112,11 @@ export default {
                 isATrue: true,
                 isAFalse: false,
                 is_a_true: true,
-                is_a_flase:false,
+                is_a_flase: false,
                 is_l_true: true,
-                is_l_flase:false,
+                is_l_flase: false,
                 is_s_true: true,
-                is_s_flase:false,
+                is_s_flase: false,
                 HeroList: [
                     {
                         id: "1",
@@ -258,10 +255,9 @@ export default {
             this.options.is_s_false = true;
         },
         closeLoginDialog() {
-            
             this.isMaskShow = false;
             // this.isLoginDialog = false;
-           
+
             this.options.is_l_false = true;
             this.options.is_l_true = false;
 
@@ -301,14 +297,13 @@ export default {
                 this.isMyAccountInfoDialog = true;
                 this.options.is_a_false = false;
                 this.options.is_a_true = true;
-
             } else if (myAccountInfo == "登錄賬號") {
                 // 未登录状态{1.未登陆直接弹出登录框 2.已登录未选择区服}
                 if (token == "" || token == null) {
                     // console.log("请您先进行登陆");
                     this.isMaskShow = true;
                     this.isLoginDialog = true;
-                    
+
                     this.options.is_l_false = false;
                     this.options.is_l_true = true;
                 } else {
@@ -317,7 +312,6 @@ export default {
                     this.isSelectServerDialog = true;
                     this.options.is_s_false = false;
                     this.options.is_s_true = true;
-
                 }
             }
         },
@@ -566,13 +560,52 @@ export default {
             }
         },
         glodFbShare() {
-            this.$layer("父组件中出现金奖分享模块了");
-            var cur_timestap = new Date();
-            var start_timestap = '2019-12-26';
-            var end_timestap = '2019-12-1';
-            var process = (cur_timestap - start_timestap)/(end_timestap-start_timestap);
-            
+            let t = this;
+            // 金将分享
+            FB.ui({
+                method: 'share',
+                href:"http://event.hero.gamemorefun.net",
+            },function (response){
+                if(response) {
+                    this.$layer.msg('分享成功！');
+                }
+            })
+        },
+        glodGetReward(n) {
+            var token = localStorage.getItem("token");
+            var n = 100;
+            if (token) {
+                if (n !== 100) {
+                    console.log(n, "當前的token", token);
+                    this.$layer.msg("您的助力人數未達到5000！");
+                } else {
+                    var uuid = localStorage.getItem("uuid");
+                    var role_id = localStorage.getItem("roleId");
 
+                    axios.defaults.headers.common["Authorization"] =
+                        localStorage.token;
+                    axios
+                        .get(
+                            "http://luandou.gamemorefun.net/api/share/getGiftCode",
+                            {
+                                params: {
+                                    uuid: uuid,
+                                    role_id: role_id
+                                }
+                            }
+                        )
+                        .then(result => {
+                            this.$layer.msg(result.data.msg);
+                            if (result.data.data) {
+                                // 此处要弹出领取奖励框
+                                console.log(result.data.data);
+                            } else {
+                            }
+                        });
+                }
+            } else {
+                this.$layer.msg("請先進行登錄！");
+            }
         }
     }
 };
