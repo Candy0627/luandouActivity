@@ -43,7 +43,6 @@ export default {
                 (end_timestap - start_timestap);
             this.percent = process * 100;
             var n = this.percent;
-            console.log(n);
             if (n > 11) {
                 this.oList[0] = 0;
             }
@@ -76,7 +75,12 @@ export default {
     },
     methods: {
         glodFbShare() {
-            this.$emit("glodFbShare");
+            var token = localStorage.getItem("token");
+            if(token){
+                this.$emit("glodFbShare");
+            } else {
+                this.$layer.msg("請先進行登錄！");
+            }
         },
         glodGetReward() {
            this.$emit('glodGetReward',this.percent);
@@ -107,8 +111,8 @@ export default {
             background-size: 100% 100%;
 
             ul {
-                width: 6.4rem;
-                height: 5rem;
+                width: 6.33rem;
+                height: 4.95rem;
                 display: -webkit-box;
                 display: -ms-flexbox;
                 display: flex;
@@ -117,26 +121,24 @@ export default {
                 -ms-flex-pack: distribute;
                 justify-content: space-around;
                 border-radius: 100%;
-                padding-top: 0.3rem;
-                margin-left: 0.01rem;
+                position: absolute;
+                top: .3rem;
+                left: .08rem;
                 li {
-                    width: 33%;
+                    width: 33.3333333333333%;
                     background: #000;
-
-                    &:nth-child(1) {
-                        border-top-left-radius: 0.5rem;
+                    background-size:50% 50%;
+                    &:nth-of-type(1) {
+                        background: radial-gradient(circle at top left,transparent .175rem,black 0) top left;
                     }
-
-                    &:nth-child(3) {
-                        border-top-right-radius: 0.5rem;
+                    &:nth-of-type(3) {
+                        background: radial-gradient(circle at top right,transparent .175rem,black 0) top right;
                     }
-
-                    &:nth-child(7) {
-                        border-bottom-left-radius: 0.5rem;
+                    &:nth-of-type(7) {
+                        background:radial-gradient(circle at bottom left,transparent .175rem,black 0) bottom left;
                     }
-
-                    &:nth-child(9) {
-                        border-bottom-right-radius: 0.5rem;
+                    &:nth-of-type(9) {
+                        background:radial-gradient(circle at bottom right,transparent .175rem,black 0) bottom right;
                     }
                 }
                 span{
@@ -145,32 +147,32 @@ export default {
                         left:33%;
                         z-index :11;
                         width: 1px;
-                        height: 93%;
+                        height: 100%;
                         background: #ffa500;
                     }
                     &:nth-child(2){
                         position :absolute;
-                        right:34%;
+                        right:33%;
                         z-index :11;
                         width: 1px;
-                        height: 93%;
+                        height: 100%;
                         background: #ffa500;
                     }
                     &:nth-child(3){
                         position: absolute;
-                        left: 1.6%;
-                        top: 36.4%;
+                        left:0;
+                        top: 33.4%;
                         z-index: 11;
-                        width: 96.78%;
+                        width: 100%;
                         height: 1px;
                         background: #ffa500;
                     }
                     &:nth-child(4){
                         position: absolute;
-                        left: 1.6%;
-                        bottom: 32%;
+                        left: 0;
+                        bottom: 33%;
                         z-index: 11;
-                        width: 96.78%;
+                        width: 100%;
                         height: 1px;
                         background: #ffa500;
                     }

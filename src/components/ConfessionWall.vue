@@ -4,19 +4,26 @@
     <router-link to="/" class="backIndex">首页</router-link>
     <div class="wall">
       <!-- 弹幕 -->
-      
+
       <div id="container">
         <i></i>
         <i></i>
         <i></i>
         <i></i>
-        <video id="video" src="/static/videos/video.mp4" controls></video>
+        <video id="video" controls>
+          <source src="/static/videos/video.mp4" />
+        </video>
         <!-- <video id="video" src="https://cs.gamemorefun.net/media/myVideo.mp4" controls width="100%" height="100%"></video> -->
       </div>
 
       <div class="danmaku-editor">
         <div id="avatar-selector"></div>
-        <input type="text" id="danmaku_input" placeholder="輸入內容發送評論彈幕" v-model="options.barrageText" />
+        <input
+          type="text"
+          id="danmaku_input"
+          placeholder="輸入內容發送評論彈幕"
+          v-model="options.barrageText"
+        />
         <button id="danmaku_submit">發送</button>
       </div>
       <p id="msg_box"></p>
@@ -34,16 +41,16 @@
 <script>
 import axios from "axios";
 import Barrage from "barrage-ui";
-import moment from 'moment'
+import moment from "moment";
 // import example from "barrage-ui/example.json";
 
 export default {
   name: "HomeConfessionWall",
-  props: ["options","isConfessionWall"],
+  props: ["options", "isConfessionWall"],
   data() {
     return {
       barrageData: [],
-      winnerList:[]
+      winnerList: []
     };
   },
   mounted() {
@@ -52,10 +59,9 @@ export default {
   },
   filters: {
     //自定义时间过滤器
-    dateStr: function(value,format) {
-        return moment().format("MMM Do")
+    dateStr: function(value, format) {
+      return moment().format("MMM Do");
     }
-
   },
   methods: {
     confessionWall() {
@@ -92,7 +98,7 @@ export default {
           });
           that.barrageData = newData;
           barrage.setData(that.barrageData);
-        //barrage.canvas.height = container.clientHeight - 110;
+          //barrage.canvas.height = container.clientHeight - 110;
         });
 
       // 绑定播放事件
@@ -135,7 +141,7 @@ export default {
       var that = this;
       button.addEventListener("click", () => {
         if (that.options.barrageText == "") {
-            this.$layer.msg("您發送的彈幕爲空!");
+          this.$layer.msg("您發送的彈幕爲空!");
         } else {
           if (video.paused) {
             this.$layer.msg("視頻未開始播放,您不能發送彈幕哦!");
@@ -144,16 +150,15 @@ export default {
               const result = barrage.add({
                 time: video.currentTime * 1000 + 550,
                 text: that.options.barrageText,
-                avatar:1
+                avatar: 1
               });
               if (result) {
-                  //调取接口数据
-                  console.log("弹幕插入状态显示",result);
-                  this.$emit("saveBarrageData",that.options.barrageText);
-                    
+                //调取接口数据
+                console.log("彈幕發送狀態", result);
+                this.$emit("saveBarrageData", that.options.barrageText);
               } else {
-                console.log("弹幕插入状态显示",result);
-                this.$layer.msg("当前进度弹幕过于饱和，请择机再试~(o_o)~");
+                console.log("彈幕發送狀態", result);
+                this.$layer.msg("當前進度過於飽和，請擇機再試~(o_o)~");
               }
             }
           }
@@ -161,12 +166,11 @@ export default {
       });
     },
     winnersList() {
-        let that = this;
-        axios.get('http://luandou.gamemorefun.net/api/winners')
-            .then((result) => {
-                // console.log(result.data.data);
-                that.winnerList = result.data.data;
-        })
+      let that = this;
+      axios.get("http://luandou.gamemorefun.net/api/winners").then(result => {
+        // console.log(result.data.data);
+        that.winnerList = result.data.data;
+      });
     }
   }
 };
@@ -178,6 +182,7 @@ export default {
 .confessionWall {
   position: relative;
   z-index: -1;
+
   .wall {
     width: 6.4rem;
     position: absolute;
@@ -186,12 +191,12 @@ export default {
     margin-left: -3.2rem;
 
     .danmaku-editor {
-        position: absolute
-        top: 3.98rem
+      position: absolute;
+      top: 3.98rem;
 
       #danmaku_input {
         position: absolute;
-        top: -.16rem;
+        top: -0.16rem;
         padding-left: 0.3rem;
         width: 68%;
         height: 0.5rem;
@@ -208,42 +213,54 @@ export default {
         top: -0.15rem;
       }
     }
+
+    #container {
+      position: initial !important;
+    }
+
     #container, .video {
-        i{
-            display: block
-            position: absolute
-            z-index :1
-            &:nth-child(1){
-                width:6.5rem
-                height :.4rem
-                top: -.25rem
-                background: url('/static/images/v_t.png') no-repeat
-                background-size: 100% 100%
-            }
-            &:nth-child(2){
-                width:6.39rem
-                height :.23rem
-                bottom:.1rem
-                background: url('/static/images/v_b.png') no-repeat
-                background-size: 100% 100%
-            }
-            &:nth-child(3){
-                width:.15rem
-                height :3.25rem
-                top:.1rem
-                left:0
-                background: url('/static/images/v_l.png') no-repeat
-                background-size: 100% 100%
-            }
-            &:nth-child(4){
-                width:.15rem
-                height :3.25rem
-                top:.1rem
-                right:0
-                background: url('/static/images/v_r.png') no-repeat
-                background-size: 100% 100%
-            }
+      i {
+        display: block;
+        position: absolute;
+        z-index: 1;
+
+        &:nth-child(1) {
+          width: 6.5rem;
+          height: 0.4rem;
+          top: -0.25rem;
+          left: -0.05rem;
+          background: url('/static/images/v_t.png') no-repeat;
+          background-size: 100% 100%;
         }
+
+        &:nth-child(2) {
+            width: 6.48rem;
+            height: 0.23rem;
+            bottom: 0.342rem;
+            left: -0.04rem;
+            background: url('/static/images/v_b.png') no-repeat;
+            background-size: 100% 100%;
+        }
+
+        &:nth-child(3) {
+          width: 0.15rem;
+          height: 3.25rem;
+          top: 0.16rem;
+          left: -0.05rem;
+          background: url('/static/images/v_l.png') no-repeat;
+          background-size: 100% 100%;
+        }
+
+        &:nth-child(4) {
+          width: 0.15rem;
+          height: 3.25rem;
+          top: 0.16rem;
+          right: -.05rem;
+          background: url('/static/images/v_r.png') no-repeat;
+          background-size: 100% 100%;
+        }
+      }
+
       em {
         width: 0.63rem;
         height: 0.63rem;
@@ -307,9 +324,10 @@ export default {
         width: 100%;
         height: 0.39rem;
         line-height: 0.39rem;
-        border-bottom:1px dashed #ecbb52
-        &:nth-child(1){
-            border-top:1px dashed #ecbb52
+        border-bottom: 1px dashed #ecbb52;
+
+        &:nth-child(1) {
+          border-top: 1px dashed #ecbb52;
         }
 
         span {
@@ -317,7 +335,7 @@ export default {
           color: #ecbc53;
           flex: 1;
           display: inline-block;
-          text-shadow:#fdfbe3 1px 0 0,#fdfbe3 0 1px 0,#fdfbe3 -1px 0 0,#fdfbe3 0 -1px 0;
+          text-shadow: #fdfbe3 1px 0 0, #fdfbe3 0 1px 0, #fdfbe3 -1px 0 0, #fdfbe3 0 -1px 0;
 
           &:nth-child(1) {
             padding-left: 0.3rem;

@@ -159,3 +159,9 @@ button{
   background: none;
   border: none;
 }
+
+@media screen and (min-width: 320px) and (max-width:374px) {
+    .confessionWall .wall video {
+        width: 88% !important;
+    }
+}

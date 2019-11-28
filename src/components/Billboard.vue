@@ -58,14 +58,6 @@ export default {
                 let data = this.rankData.filter(
                     value => value["uname"].indexOf(this.searchText) !== -1
                 );
-
-                console.log(
-                    "返回的數據",
-                    this.rankData,
-                    "查詢出來的數據",
-                    data
-                );
-
                 if (data === undefined || data.length === 0) {
                     this.isTipsShow = true;
                     this.tipsText = "未上榜，請再接再厲!";
@@ -98,9 +90,6 @@ export default {
                     console.log(data);
                     t.rankData = data;
                 });
-        },
-        queryData() {
-            // 根据昵称查询数据
         }
     }
 };

@@ -1,5 +1,5 @@
 <template>
-    <section class="login animatedA" :class="{zoomIn:options.is_l_true,zoomOut:options.is_l_false}" v-show="isLoginDialog">
+    <section class="login animatedA" :class="{zoomIn:options.is_l_true,zoomOut:options.is_l_false}" v-if="isLoginDialog">
         <i @click="closeLoginDialog"></i>
         <img src="../../static/images/login_bg.png" alt />
         <form action>

@@ -1,5 +1,5 @@
 <template>
-  <section class="login myAccountInfo animatedA" :class="{zoomIn:options.is_a_true,zoomOut:options.is_a_false}" v-show="isMyAccountInfoDialog">
+  <section class="login myAccountInfo animatedA" :class="{zoomIn:options.is_a_true,zoomOut:options.is_a_false}" v-if="isMyAccountInfoDialog">
     <i @click="closeMyAccountInfoDialog"></i>
     <img src="/static/images/server_bg.png" alt />
     <form action>

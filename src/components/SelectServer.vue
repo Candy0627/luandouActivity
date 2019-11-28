@@ -1,5 +1,5 @@
 <template>
-    <section class="login selectServer animatedA" :class="{zoomIn:options.is_s_true,zoomOut:options.is_s_false}" v-show="isSelectServerDialog">
+    <section class="login selectServer animatedA" :class="{zoomIn:options.is_s_true,zoomOut:options.is_s_false}" v-if="isSelectServerDialog">
         <i @click="closeSelectServerDialog"></i>
         <img src="/static/images/select_qufu.png" alt />
         <form action>

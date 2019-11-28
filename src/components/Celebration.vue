@@ -48,14 +48,19 @@ export default {
   },
   methods: {
     heroFbShare () {
-        this.$emit("heroFbShare");
+        var token = localStorage.getItem("token");
+        if(token){
+            this.$emit("heroFbShare");
+        } else {
+             this.$layer.msg("請先進行登錄！");
+        }
     },
     // getReward () {
     //     this.$emit("getReward");
     // },
     getHeroID (id,active) {
         if(active == true){
-            this.$layer.msg("武将已经被分享过了");
+            this.$layer.msg("武將已經被分享過了");
         } else {
             this.$emit("getHeroId",id,active);
         }
@@ -67,7 +72,13 @@ export default {
         // }
     },
     openGetRewardlogDialog() {
-        this.$emit('openGetRewardlogDialog');
+        var token = localStorage.getItem("token");
+        if(token){
+            this.$emit('openGetRewardlogDialog');
+        } else {
+             this.$layer.msg("請先進行登錄！");
+        }
+        
     }
   }
 };

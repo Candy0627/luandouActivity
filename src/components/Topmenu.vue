@@ -2,7 +2,7 @@
     <section
         class="comWidth fixedMenu animated"
         :class="{fadeInRight:options.isTrue,fadeOutRight:options.isFalse}"
-        v-show="isTopMenu"
+        v-if="isTopMenu"
     >
         <em @click="closeTopMenu"></em>
         <ul>

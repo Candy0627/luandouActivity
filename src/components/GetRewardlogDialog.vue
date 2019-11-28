@@ -1,5 +1,5 @@
 <template>
-  <section class="login" v-show="isGetRewardLogDialog">
+  <section class="login" v-if="isGetRewardLogDialog">
     <i @click="closeGetRewardLogDialog"></i>
     <img src="../../static/images/get_reword_bg.png" alt />
     <form action>

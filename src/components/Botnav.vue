@@ -1,5 +1,5 @@
 <template>
-  <ul class="bottom" v-show="isBotNav">
+  <ul class="bottom" v-if="isBotNav">
     <li>
         <router-link to="/confessionWall">表白墻</router-link>
     </li>
