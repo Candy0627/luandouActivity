@@ -55,8 +55,9 @@ export default {
                 this.isTipsShow = true;
                 this.tipsText = "";
             } else {
-
-                let data = this.rankData.filter(value => value["uname"].indexOf(this.searchText) !== -1);
+                let data = this.rankData.filter(
+                    value => value["uname"].indexOf(this.searchText) !== -1
+                );
 
                 console.log(
                     "返回的數據",
@@ -69,7 +70,7 @@ export default {
                     this.isTipsShow = true;
                     this.tipsText = "未上榜，請再接再厲!";
                 } else {
-                    this.tipsText ='';
+                    this.tipsText = "";
                 }
 
                 return data;
@@ -88,13 +89,14 @@ export default {
     methods: {
         rankListData() {
             let t = this;
-            axios
-                .get(
-                    "http://119.28.177.29/user_login/api.php?action=query_server_user_power"
-                )
-                .then(result => {
-                    // console.log('风云榜请求的数据',result.data);
-                    t.rankData = result.data;
+
+            fetch(
+                "http://119.28.177.29/user_login/api.php?action=query_server_user_power"
+            )
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    t.rankData = data;
                 });
         },
         queryData() {
