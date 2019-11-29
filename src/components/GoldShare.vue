@@ -12,7 +12,12 @@
                     <li v-for="(item,index) in oListData" :key="index" :style="{opacity:item}"></li>
                 </ul>
             </div>
-            <div class="progress"></div>
+
+            <div class="progress">
+                <span>{{percent}}%</span>
+                <mt-progress :value="percent"></mt-progress>
+            </div>
+
             <a href="javascript:;" class="fbShare" @click="glodFbShare"></a>
             <a href="javascript:;" class="getReward" @click="glodGetReward"></a>
         </div>
@@ -27,22 +32,26 @@ export default {
     data() {
         return {
             percent: "",
-            oList:[0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6,0.6],
+            oList: [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
         };
     },
     mounted() {
         this.glodInit();
     },
-    computed:{
-        oListData : function () {
+    computed: {
+        oListData: function() {
             var cur_timestap = Date.parse(new Date());
-            var start_timestap = Date.parse("2019-11-26");
-            var end_timestap = Date.parse("2019-12-1");
-            var process =
-                (cur_timestap - start_timestap) /
-                (end_timestap - start_timestap);
-            this.percent = process * 100;
-            var n = this.percent;
+
+            // var start_timestap = Date.parse("2019-11-26");
+            // var end_timestap = Date.parse("2019-12-1");
+
+            var start_timestap = 1574697600;
+            var end_timestap = 1575215999;
+
+            var n = parseInt((cur_timestap - start_timestap) /
+                (end_timestap - start_timestap)*100);
+            this.percent = n;
+            
             if (n > 11) {
                 this.oList[0] = 0;
             }
@@ -76,24 +85,46 @@ export default {
     methods: {
         glodFbShare() {
             var token = localStorage.getItem("token");
-            if(token){
+            if (token) {
                 this.$emit("glodFbShare");
             } else {
                 this.$layer.msg("請先進行登錄！");
             }
         },
         glodGetReward() {
-           this.$emit('glodGetReward',this.percent);
+            this.$emit("glodGetReward", this.percent);
         },
-        glodInit() {
-            
-        }
-
+        glodInit() {}
     }
 };
 </script>
 
 <style lang="stylus" scoped>
+.glodShare >>> .mt-progress-content {
+    width: 6.2rem;
+    height: 0.41rem;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -3.1rem;
+    .mt-progress-runway {
+        background: blue;
+        width: 100%;
+        height: 0.41rem !important;
+        background: url('/static/images/progress_bg.png') no-repeat;
+        background-size: 100% 100%;
+    }
+    .mt-progress-progress {
+        position: absolute;
+        background: #f5ce79;
+        linear-gradient(to right, #fee6b3, #fbdb98, #f6cd78);
+        height: 0.35rem !important;
+        top: 0.03rem;
+        left: 0.04rem;
+        border-radius: 0.3rem;
+    }
+}
+
 .glodShare {
     position: relative;
 
@@ -109,7 +140,6 @@ export default {
             height: 5.36rem;
             background: url('/static/images/gold_share_bot.png') no-repeat;
             background-size: 100% 100%;
-
             ul {
                 width: 6.33rem;
                 height: 4.95rem;
@@ -122,56 +152,62 @@ export default {
                 justify-content: space-around;
                 border-radius: 100%;
                 position: absolute;
-                top: .3rem;
-                left: .08rem;
+                top: 0.3rem;
+                left: 0.08rem;
+
                 li {
                     width: 33.3333333333333%;
                     background: #000;
-                    background-size:50% 50%;
+                    background-size: 50% 50%;
+
                     &:nth-of-type(1) {
-                        background: radial-gradient(circle at top left,transparent .175rem,black 0) top left;
+                        background: radial-gradient(circle at top left, transparent 0.175rem, black 0) top left;
                     }
+
                     &:nth-of-type(3) {
-                        background: radial-gradient(circle at top right,transparent .175rem,black 0) top right;
+                        background: radial-gradient(circle at top right, transparent 0.175rem, black 0) top right;
                     }
+
                     &:nth-of-type(7) {
-                        background:radial-gradient(circle at bottom left,transparent .175rem,black 0) bottom left;
+                        background: radial-gradient(circle at bottom left, transparent 0.175rem, black 0) bottom left;
                     }
+
                     &:nth-of-type(9) {
-                        background:radial-gradient(circle at bottom right,transparent .175rem,black 0) bottom right;
+                        background: radial-gradient(circle at bottom right, transparent 0.175rem, black 0) bottom right;
                     }
                 }
-                span{
-                    &:nth-child(1){
-                        position :absolute;
-                        left:33%;
-                        z-index :11;
-                        width: 1px;
-                        height: 100%;
-                        background: #ffa500;
-                    }
-                    &:nth-child(2){
-                        position :absolute;
-                        right:33%;
-                        z-index :11;
-                        width: 1px;
-                        height: 100%;
-                        background: #ffa500;
-                    }
-                    &:nth-child(3){
+
+                span {
+                    z-index :1;
+                    &:nth-child(1) {
                         position: absolute;
-                        left:0;
+                        left: 33%;
+                        width: 1px;
+                        height: 100%;
+                        background: #ffa500;
+                    }
+
+                    &:nth-child(2) {
+                        position: absolute;
+                        right: 33%;
+                        width: 1px;
+                        height: 100%;
+                        background: #ffa500;
+                    }
+
+                    &:nth-child(3) {
+                        position: absolute;
+                        left: 0;
                         top: 33.4%;
-                        z-index: 11;
                         width: 100%;
                         height: 1px;
                         background: #ffa500;
                     }
-                    &:nth-child(4){
+
+                    &:nth-child(4) {
                         position: absolute;
                         left: 0;
                         bottom: 33%;
-                        z-index: 11;
                         width: 100%;
                         height: 1px;
                         background: #ffa500;
@@ -187,8 +223,14 @@ export default {
             top: 5.55rem;
             left: 50%;
             margin-left: -3.1rem;
-            background: url('/static/images/progress_bg.png') no-repeat;
-            background-size: 100% 100%;
+            span{
+                position: absolute;
+                z-index: 1;
+                color: #fff;
+                left: 45%;
+                font-size: .24rem;
+                top: 20%;
+            }
         }
 
         a {

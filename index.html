@@ -11,23 +11,35 @@
     <meta property="og:description" content="亂鬥週年慶 豪禮贏不停" />
     <link rel="shortcut icon" href="./static/images/favicon.ico" type="image/x-icon">
     <script>
-        // (function (d, s, id) {
-        //     var js, fjs = d.getElementsByTagName(s)[0];
-        //     if (d.getElementById(id)) return;
-        //     js = d.createElement(s);
-        //     js.id = id;
-        //     // js.src = "https://connect.facebook.net/en_US/sdk.js";
-        //     js.src = 'https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v5.0';
-        //     fjs.parentNode.insertBefore(js, fjs);
-        // }(document, 'script', 'facebook-jssdk'));
-        // window.fbAsyncInit = function () {
-        //     FB.init({
-        //         appId: ' 2189015318014723',
-        //         cookie: true, // 启用cookie
-        //         xfbml: true, // 解析此页面上的社交插件
-        //         version: 'v2.8' // 使用图形api 2.8版本
-        //     });
-        // };
+
+        function getQueryString(key) {
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            var result = window.location.search.substr(1).match(reg);
+            return result ? decodeURIComponent(result[2]) : null;
+        }
+
+        var platform = getQueryString("platform");
+        console.log('platform', platform);
+
+        function browserRedirect() {
+            var sUserAgent = navigator.userAgent.toLowerCase();
+            var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+            var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+            var bIsAndroid = sUserAgent.match(/android/i) == "android";
+            var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+            var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+
+            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+                
+            } else {
+                window.location.href = 'pc_index.html';
+                // window.location= 'index.html';
+            }
+        }
+        browserRedirect();//调用自身，页面一打开就开始跳转
     </script>
     <script>
         /**
@@ -43,6 +55,7 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+
 </head>
 
 <body>

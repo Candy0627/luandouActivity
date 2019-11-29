@@ -35,8 +35,12 @@
 </template>
 
 <script>
+// import HomeGetmadialog from '/src/components/GetMaDialog'
 export default {
   name: "HomeCelebration",
+//   components:{
+//       HomeGetmadialog
+//   },
   props: ["options", "isCelebration"],
   data () {
     return {
@@ -55,15 +59,17 @@ export default {
              this.$layer.msg("請先進行登錄！");
         }
     },
-    // getReward () {
-    //     this.$emit("getReward");
-    // },
     getHeroID (id,active) {
-        if(active == true){
-            this.$layer.msg("武將已經被分享過了");
-        } else {
-            this.$emit("getHeroId",id,active);
-        }
+         this.$emit("getHeroId",id,active);
+        // if(active == true){
+        //     this.$layer.msg("武將已經被分享過了");
+        // } else {
+        //     // 判断武将
+        //     active = true;
+
+        //     this.$layer.msg("该武將还没有被分享");
+        //     this.$emit("getHeroId",id,active);
+        // }
         // console.log('flag-active',this.options.flag,active);
         // if(this.options.flag == 0){
         //     this.$emit("getHeroId",id,active);

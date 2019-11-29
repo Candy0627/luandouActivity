@@ -32,7 +32,7 @@
             @closeMyAccountInfoDialog="closeMyAccountInfoDialog"
         ></home-myaccountdialog>
 
-        <!-- <home-confessionWall :isConfessionWall="isConfessionWall"></home-confessionWall> --> -->
+        <!-- <home-confessionWall :isConfessionWall="isConfessionWall"></home-confessionWall> -->
         
         <router-view></router-view>
         <!-- <router-view/> -->

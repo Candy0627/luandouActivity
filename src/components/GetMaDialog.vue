@@ -1,5 +1,5 @@
 <template>
-    <section class="virtual_code_dialog" v-show="isGetMaDialog">
+    <section class="virtual_code_dialog animatedA" :class="{zoomIn:options.is_wj_true,zoomOut:options.is_wj_false}" v-if="isGetMaDialog">
         <i @click="closeGetMaDialog"></i>
         <img src="/static/images/get_ma_bg.png" alt />
         <span class="text">
@@ -34,7 +34,7 @@ export default {
 .virtual_code_dialog
     position: fixed;
     z-index: 999999;
-    top: 10%;
+    top: 25%;
     i
         display: inline-block;
         width: 0.64rem;
@@ -53,6 +53,7 @@ export default {
         margin-left: -2.9rem;
         text-align: center;
         line-height: .66rem;
+        color:#ef3a2e
     .btn_getvirtualcode
         position: absolute;
         top: 3.88rem;

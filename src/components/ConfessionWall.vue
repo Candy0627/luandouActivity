@@ -84,7 +84,7 @@ export default {
 
       axios.defaults.headers.common["Authorization"] = localStorage.token;
       axios
-        .get("http://luandou.gamemorefun.net/api/barrage/get")
+        .get("https://luandou.gamemorefun.net/api/barrage/get")
         .then(function(res) {
           var data = res.data;
           var newData = data.map((item, i) => {
@@ -167,7 +167,7 @@ export default {
     },
     winnersList() {
       let that = this;
-      axios.get("http://luandou.gamemorefun.net/api/winners").then(result => {
+      axios.get("https://luandou.gamemorefun.net/api/winners").then(result => {
         // console.log(result.data.data);
         that.winnerList = result.data.data;
       });
@@ -196,7 +196,7 @@ export default {
 
       #danmaku_input {
         position: absolute;
-        top: -0.16rem;
+        top: -0.14rem;
         padding-left: 0.3rem;
         width: 68%;
         height: 0.5rem;
@@ -236,7 +236,7 @@ export default {
         &:nth-child(2) {
             width: 6.48rem;
             height: 0.23rem;
-            bottom: 0.342rem;
+            bottom: 0.26rem;
             left: -0.04rem;
             background: url('/static/images/v_b.png') no-repeat;
             background-size: 100% 100%;
@@ -275,8 +275,12 @@ export default {
       }
 
       video {
-        width: 100%;
-        height: 100%;
+        width: 98.2%;
+        margin-left: .05rem;
+        border-bottom-right-radius: .2rem;
+        border-bottom-left-radius:.2rem;
+        border-top-right-radius: .2rem;
+        border-top-left-radius:.2rem;
       }
     }
 

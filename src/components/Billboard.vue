@@ -6,11 +6,18 @@
             <div class="tips">{{tipsText}}</div>
             <input type="text" placeholder="輸入暱稱查詢戰力" v-model="searchText" />
             <div class="list" v-for="(item,index) in filterList" :key="index">
+                <span>{{index+1}}</span>
+                <span>{{item.sname}}</span>
                 <span>{{item.uname}}</span>
                 <span>{{item.power | valueComputed}}</span>
             </div>
         </div>
-
+        <dl>
+            <dt>排名</dt>
+            <dt>區服</dt>
+            <dt>暱稱</dt>
+            <dt>戰力</dt>
+        </dl>
         <ul class="moreRank">
             <li v-for="(item,index) in rankData" :key="index">
                 <span>
@@ -50,14 +57,24 @@ export default {
     computed: {
         filterList() {
             this.isTipsShow = false;
-
             if (!this.searchText) {
                 this.isTipsShow = true;
                 this.tipsText = "";
             } else {
-                let data = this.rankData.filter(
-                    value => value["uname"].indexOf(this.searchText) !== -1
-                );
+                // 模糊查詢
+                // let data = this.rankData.filter(
+                //     value => value["uname"].includes(this.searchText) !== -1
+                // );
+                var data = [];
+                // 精確查詢
+                this.rankData.map((item, i, a) => {
+                    // console.log('相等',item,i,a);
+                    if (item.uname == this.searchText) {
+                        data.push(item);
+                        // return item;
+                    }
+                });
+                console.log("相等的數據", data);
                 if (data === undefined || data.length === 0) {
                     this.isTipsShow = true;
                     this.tipsText = "未上榜，請再接再厲!";
@@ -98,7 +115,12 @@ export default {
 <style lang="stylus" scoped>
 .billboard {
     position: relative;
-
+    dl{
+        display flex
+        dt{
+            flex 1
+        }
+    }
     .moreRank {
         width: 5.8rem;
         height: 5.58rem;
@@ -152,11 +174,12 @@ export default {
 
             span {
                 text-align: center;
+                background: none;
 
                 img {
                     width: 0.47rem;
                     height: 0.67rem;
-                    padding-left: 0.2rem;
+                    margin-left: 0.2rem;
                 }
 
                 &:nth-child(1) {
@@ -188,18 +211,24 @@ export default {
 
         .tips {
             position: absolute;
-            top: 1.01rem;
+            top: 1.02rem;
+            font-size: 0.25rem;
+            color: #ecbc53;
+            text-align: center;
+            width: 100%;
+            text-shadow: #fdfbe3 1px 0 0, #fdfbe3 0 1px 0, #fdfbe3 -1px 0 0, #fdfbe3 0 -1px 0;
         }
 
         input {
             width: 100%;
-            height: 0.45rem;
+            height: 0.4rem;
             padding-left: 0.1rem;
             font-weight: 700;
             font-size: 0.24rem;
             color: #444444;
             background: none;
             border: none;
+            text-align: center;
         }
 
         .list {
@@ -213,8 +242,12 @@ export default {
             span {
                 flex: 1;
                 text-align: center;
-                font-size: 0.3rem;
+                font-size: 0.25rem;
                 color: #ecbc53;
+                text-shadow: #fdfbe3 1px 0 0, #fdfbe3 0 1px 0, #fdfbe3 -1px 0 0, #fdfbe3 0 -1px 0;
+                &:nth-child(1){
+                    flex: .63
+                }
             }
         }
     }

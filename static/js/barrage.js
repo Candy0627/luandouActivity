@@ -21,7 +21,7 @@ barrage.canvas.height = container.clientHeight - 80;
 // console.log('原来的数据格式',data);
 // axios 获取接口数据
 axios.defaults.headers.common['Authorization'] = localStorage.token;
-axios.get('http://luandou.gamemorefun.net/api/barrage/get')
+axios.get('https://luandou.gamemorefun.net/api/barrage/get')
     .then(function (res) {
         // console.log(res);
         var data = res.data;
@@ -138,7 +138,7 @@ document.getElementById('danmaku_submit').onclick = e => {
             axios.defaults.headers.common['Authorization'] = localStorage.token;
             console.log('token',localStorage.token);
             axios
-              .post('http://luandou.gamemorefun.net/api/barrage/store', input)
+              .post('https://luandou.gamemorefun.net/api/barrage/store', input)
               .then((result) => {
                 console.log(result.data)
               })

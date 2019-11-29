@@ -78,10 +78,9 @@ export default {
 
 <style lang="stylus" scoped>
 .selectServer {
-    position: absolute;
+    position: fixed;
     top: 25%;
-    z-index: 9999;
-
+    z-index: 10;
     i {
         display: inline-block;
         width: 0.64rem;
