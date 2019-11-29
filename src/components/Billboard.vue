@@ -100,7 +100,7 @@ export default {
             let t = this;
 
             fetch(
-                "http://119.28.177.29/user_login/api.php?action=query_server_user_power"
+                "https://119.28.177.29/user_login/api.php?action=query_server_user_power"
             )
                 .then(response => response.json())
                 .then(data => {
