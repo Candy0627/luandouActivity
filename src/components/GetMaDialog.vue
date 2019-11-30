@@ -24,7 +24,7 @@ export default {
             this.$emit("closeGetMaDialog");
         },
         get_virtual_code () {
-            this.$layer.msg("我要开始领虚宝码了");
+            this.$layer.msg("領取成功!");
         }
     }
 };
@@ -33,7 +33,7 @@ export default {
 <style lang="stylus" scoped>
 .virtual_code_dialog
     position: fixed;
-    z-index: 999999;
+    z-index: 2;
     top: 25%;
     i
         display: inline-block;

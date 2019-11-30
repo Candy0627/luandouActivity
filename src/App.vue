@@ -51,9 +51,9 @@
         <router-view
             :options="options"
             @saveBarrageData="saveBarrageData"
-            @heroFbShare="heroFbShare"
-            @getSharedHero="getSharedHero"
-            @getHeroId="getHeroId"
+            @heroFbShareClick="heroFbShareClick"
+            @getSharedHeroInfo="getSharedHeroInfo"
+            @getHeroIDClick="getHeroIDClick"
             @openGetRewardlogDialog="openGetRewardlogDialog"
             @glodFbShare="glodFbShare"
             @glodGetReward="glodGetReward"
@@ -115,7 +115,6 @@ export default {
                 recordList: [],
                 isHeroBright: false,
                 heroId: "",
-                flag: 0,
                 heroType: [],
                 HeroDataList: [],
                 barrageText: "",
@@ -139,6 +138,7 @@ export default {
                 total: "",
                 barwidth: "",
                 flag: 0,
+                current:"",
                 HeroList: [
                     {
                         id: "1",
@@ -263,24 +263,25 @@ export default {
             // this.options.roles.ServerName = this.options.selected.ServerName;
             // this.options.roles.ServerId = this.options.selected.ServerId;
         }
+        // var vConsole = new VConsole();
+        console.log("Hello world");
     },
     methods: {
         closeMyAccountInfoDialog() {
             this.isMaskShow = false;
-            // this.isMyAccountInfoDialog = false;
+            this.isMyAccountInfoDialog = false;
             this.options.is_a_true = false;
             this.options.is_a_false = true;
         },
         closeSelectServerDialog() {
             this.isMaskShow = false;
-            // this.isSelectServerDialog = false;
+            this.isSelectServerDialog = false;
             this.options.is_s_true = false;
             this.options.is_s_false = true;
         },
         closeLoginDialog() {
             this.isMaskShow = false;
-            // this.isLoginDialog = false;
-
+            this.isLoginDialog = false;
             this.options.is_l_false = true;
             this.options.is_l_true = false;
 
@@ -297,13 +298,13 @@ export default {
         },
         closeGetMaDialog() {
             this.isMaskShow = false;
-            //   this.isGetMaDialog = false;
+            this.isGetMaDialog = false;
             this.options.is_wj_false = true;
             this.options.is_wj_true = false;
         },
         closeGetJinjiangDialog() {
             this.isMaskShow = false;
-            //   this.isGetMaDialog = false;
+            this.isGetJinjangDialog = false;
             this.options.is_jj_false = true;
             this.options.is_jj_true = false;
         },
@@ -391,10 +392,12 @@ export default {
                             that.isMaskShow = false;
                             that.$layer.msg("登錄成功,請選擇區服！");
 
-                            setTimeout(function() {
-                                that.isSelectServerDialog = true;
-                                that.isMaskShow = true;
-                            }, 1000);
+                            that.isSelectServerDialog = true;
+                            that.isMaskShow = true;
+                            // setTimeout(function() {
+                            //     that.isSelectServerDialog = true;
+                            //     that.isMaskShow = true;
+                            // }, 1000);
 
                             that.options.userName = result.data.data.user_name;
                             that.options.roles = result.data.data.role;
@@ -405,34 +408,40 @@ export default {
             }
         },
         confirmSelectServer() {
-            // 确认选择区服按钮
-            // this.isSelectServerDialog = false;
-            this.options.is_s_true = false;
-            this.options.is_s_false = true;
-            this.isMaskShow = false;
-            // 选择区服信息真正表示登陆成功后，改变状态,並且存入token/uuid,等信息
-            this.options.myAccountInfo = "賬號信息";
-            localStorage.token = this.options.token;
-            localStorage.uuid = this.options.uuid;
+            if (localStorage.serverId) {
+                console.log("存在嗎");
+                // 确认选择区服按钮
+                this.$layer.msg("區服選擇成功!");
+                this.isSelectServerDialog = false;
+                this.options.is_s_true = false;
+                this.options.is_s_false = true;
+                this.isMaskShow = false;
+                // 选择区服信息真正表示登陆成功后，改变状态,並且存入token/uuid,等信息
+                this.options.myAccountInfo = "賬號信息";
+
+                localStorage.token = this.options.token;
+                localStorage.uuid = this.options.uuid;
+                localStorage.userName = this.options.userName;
+            } else {
+                this.$layer.msg("請選擇區服！");
+            }
         },
         cancelSelectServerDialog() {
             this.isSelectServerDialog = false;
             this.isMaskShow = false;
         },
         switchServer() {
-            // 我的账号信息跳转到选择伺服器
             this.isMyAccountInfoDialog = false;
             this.isSelectServerDialog = true;
             this.options.is_s_true = true;
             this.options.is_s_false = false;
         },
         accountOut() {
+            this.$layer.msg('已登出');
             this.isMaskShow = false;
-            // this.isMyAccountInfoDialog = false;
-
+            this.isMyAccountInfoDialog = false;
             this.options.is_a_true = false;
             this.options.is_a_false = true;
-
             this.options.myAccountInfo = "登錄賬號";
             localStorage.clear();
         },
@@ -466,26 +475,45 @@ export default {
                     that.options.barrageText = "";
                 });
         },
-        getHeroId(id, active) {
+        getHeroIDClick(id, active, index) {
+
+            console.log("當前點亮的圖標信息", id, active,index);
+            
             this.heroId = id;
-            if (active == true) {
-                //形式上判断是否点亮
-                this.$layer.msg("您已經點亮過武將了！");
-            } else {
-                //真正判断是否点亮
-                if (this.flag == 1) {
-                    this.$layer.msg("您已經點亮過武將了！");
+            var token = localStorage.getItem("token");
+            console.log("token",token);
+            // if (token) {
+                if (this.options.flag == 1) {
+                    this.$layer.msg("今日已成功點亮一名武將,請主公明日再來吧~");
                 } else {
-                    active = true;
+                    if (active == false) {
+                        // 當前的和數組中的點亮,其他的不亮
+                        // this.options.HeroList[id - 1].active = true;
+                        this.options.current = index;
+                    }
                 }
-            }
+            // } else {
+            //     this.$layer.msg("請先進行登錄並進行區服選擇!");
+            // }
+
+            // if (active == true) {
+            //     //點擊了已點亮的圖標
+            //     this.$layer.msg("您已經點亮過武將了！");
+            // } else {
+            //     //真正判断是否点亮
+            //     if (this.flag == 1) {
+            //         this.$layer.msg("您已經點亮過該武將了！");
+            //     } else {
+            //         active = true;
+            //     }
+            // }
         },
-        getSharedHero() {
+        getSharedHeroInfo() {
             var token = localStorage.getItem("token");
             if (token) {
                 var uuid = localStorage.getItem("uuid");
                 var role_id = localStorage.getItem("roleId");
-                var that = this;
+                let t = this;
                 axios.defaults.headers.common["Authorization"] =
                     localStorage.token;
                 axios
@@ -496,56 +524,59 @@ export default {
                         }
                     })
                     .then(result => {
-                        that.options.HeroDataList = result.data.data;
-                        var nrr = result.data.data;
-                        var arr = [];
-                        var timeArr = [];
-                        for (var i = 0; i < nrr.length; i++) {
-                            arr.push(nrr[i].type);
-                            timeArr.push(nrr[i].date);
+                        if (result.data.data) {
+                            t.options.HeroDataList = result.data.data;
+                            var nrr = result.data.data;
+                            var arr = [];
+                            var timeArr = [];
+                            for (var i = 0; i < nrr.length; i++) {
+                                arr.push(nrr[i].type);
+                                timeArr.push(nrr[i].date);
+                            }
+                            // 顯示武將
+                            t.options.HeroList.forEach((item, i) => {
+                                if (arr.indexOf(item.id) !== -1) {
+                                    item.active = true;
+                                }
+                            });
+
+                            // 判斷今天是否點過武將
+                            var curTime = String(
+                                new Date().getFullYear() +
+                                    "-" +
+                                    (new Date().getMonth() + 1) +
+                                    "-" +
+                                    new Date().getDate()
+                            );
+                            timeArr.forEach((item, i) => {
+                                if (timeArr.indexOf(curTime) !== -1) {
+                                    // t.$layer.msg(
+                                    //     "今日已成功點亮一名武將,請主公明日再來吧~"
+                                    // );
+                                    t.options.flag = 1;
+                                    console.log("tt", t.options.flag);
+                                } else {
+                                    t.options.flag = 0;
+                                }
+                            });
                         }
-
-                        var curTime = String(
-                            new Date().getFullYear() +
-                                "-" +
-                                (new Date().getMonth() + 1) +
-                                "-" +
-                                new Date().getDate()
-                        );
-
-                        console.log("今天的年月日", curTime);
-
-                        timeArr.forEach((item, i) => {
-                            if (timeArr.indexOf(curTime) !== -1) {
-                                console.log(
-                                    "与数据库中接口判断时间一致的,代表今天已经点亮过该武将了"
-                                );
-                                this.$layer.msg("您今天已經點亮過一個武將了");
-                                this.flag = 1;
-                            }
-                        });
-                        that.options.HeroList.forEach((item, i) => {
-                            if (arr.indexOf(item.id) !== -1) {
-                                item.active = true;
-                            }
-                        });
                     });
             } else {
-                this.$layer.msg("請先進行登錄！");
+                // this.$layer.msg("請先進行登錄並進行區服選擇!");
             }
         },
-        heroFbShare() {
-            let that = this;
-            FB.ui(
-                {
-                    method: "share",
-                    href: "https://event.hero.gamemorefun.net"
-                },
-                function(response) {
-                    if (response) {
-                        if (this.heroId == "" || this.heroId == null) {
-                            this.$layer.msg("您還沒有選擇武將！");
-                        } else {
+        heroFbShareClick() {
+            let t = this;
+            // 直接請求接口記錄返回數據，然後彈出框
+            if (t.heroId == "" || t.heroId == null) {
+                t.$layer.msg("您還沒有選擇武將！");
+            } else {
+                FB.ui({
+                        method: "share",
+                        href: "https://event.hero.gamemorefun.net"
+                    },
+                    function(response) {
+                        if (!response) {
                             // 每天只记录一次当天的武将分享
                             var uuid = localStorage.getItem("uuid");
                             var role_id = localStorage.getItem("roleId");
@@ -557,10 +588,9 @@ export default {
                                 role_id: role_id,
                                 server_id: server_id,
                                 role_name: role_name,
-                                type: this.heroId
+                                type: t.heroId
                             };
 
-                            var that = this;
                             axios.defaults.headers.common["Authorization"] =
                                 localStorage.token;
                             axios
@@ -576,24 +606,25 @@ export default {
 
                                     if (result.data.data) {
                                         console.log("禮包碼存在，彈出虛寶碼框");
-                                        that.isGetMaDialog = true;
-                                        that.is_wj_true = true;
-                                        that.is_wj_false = false;
-                                        that.$sdk = result.data.data;
+                                        t.isMaskShow = true;
+                                        t.isGetMaDialog = true;
+                                        t.is_wj_true = true;
+                                        t.is_wj_false = false;
+                                        t.$sdk = result.data.data;
                                     }
 
                                     setTimeout(() => {
-                                        that.options.isMaskShow = true;
-                                        that.options.isGetMaDialog = true;
-                                        that.options.$sdk = result.data.data;
+                                        t.options.isMaskShow = true;
+                                        t.options.isGetMaDialog = true;
+                                        t.options.$sdk = result.data.data;
                                     }, 1000);
 
-                                    that.options.flag = 1;
+                                    t.options.flag = 1;
                                 });
                         }
                     }
-                }
-            );
+                );
+            }
         },
         glodFbShare() {
             let t = this;
@@ -635,7 +666,6 @@ export default {
         },
         glodGetReward(n) {
             var token = localStorage.getItem("token");
-            var n = 100;
             if (token) {
                 if (n !== 100) {
                     console.log(n, "當前的token", token);
@@ -657,7 +687,7 @@ export default {
                             }
                         )
                         .then(result => {
-                            t.$layer.msg(result.data.msg);
+                            // t.$layer.msg(result.data.msg);
                             if (result.data.data) {
                                 // 此處要彈出獎勵礦
                                 console.log(result.data.data);
@@ -670,7 +700,7 @@ export default {
                         });
                 }
             } else {
-                this.$layer.msg("請先進行登錄！");
+                this.$layer.msg("請先進行登錄並進行區服選擇!");
             }
         }
     }

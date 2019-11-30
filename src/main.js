@@ -12,7 +12,8 @@ import moment from 'moment'
 moment.locale('zh-cn')
 import VueBlu from 'vue-blu'
 import VueClipboard  from 'vue-clipboard2'
-import Clipboard from 'clipboard';
+import Clipboard from 'clipboard'
+
 
 import 'vue-blu/dist/css/vue-blu.min.css'
 import '../static/js/rem'
@@ -20,6 +21,7 @@ import '../static/js/rem'
 import '../static/styles/reset.css'
 import '../static/styles/animate.css'
 import '../static/styles/common.css'
+
 
 Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$qs = qs;

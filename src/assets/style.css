@@ -44,7 +44,7 @@ body {
   display: table;
 }
 
-#danmaku_input {
+/* #danmaku_input {
   float: left;
   box-sizing: border-box;
   width: calc(100% - 136px);
@@ -58,7 +58,7 @@ body {
   background: transparent;
   transition: background 0.1s ease-in;
   outline: none;
-}
+} */
 
 #danmaku_input:focus {
   color: #333;

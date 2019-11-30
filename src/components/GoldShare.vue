@@ -36,22 +36,16 @@ export default {
         };
     },
     mounted() {
-        this.glodInit();
     },
     computed: {
         oListData: function() {
-            var cur_timestap = Date.parse(new Date());
-
-            // var start_timestap = Date.parse("2019-11-26");
-            // var end_timestap = Date.parse("2019-12-1");
-
+            var cur_timestap = (Date.parse(new Date()))/1000;
             var start_timestap = 1574697600;
             var end_timestap = 1575215999;
-
             var n = parseInt((cur_timestap - start_timestap) /
                 (end_timestap - start_timestap)*100);
+
             this.percent = n;
-            
             if (n > 11) {
                 this.oList[0] = 0;
             }
@@ -88,13 +82,12 @@ export default {
             if (token) {
                 this.$emit("glodFbShare");
             } else {
-                this.$layer.msg("請先進行登錄！");
+                this.$layer.msg("請先進行登錄並進行區服選擇!");
             }
         },
         glodGetReward() {
             this.$emit("glodGetReward", this.percent);
-        },
-        glodInit() {}
+        }
     }
 };
 </script>

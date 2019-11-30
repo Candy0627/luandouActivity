@@ -2,7 +2,6 @@
   <nav class="comWidth">
 	<a href="javascript:;" class="app_logo">
 		<img src="/static/images/icon-logo.png" alt align="middle" class="fl logo" />
-        <img src="static/images/icon" alt="">
 	</a>
 	<a href="javascript:;" class="app_font">
 		<span class="top">亂鬥英雄志</span>

@@ -1,15 +1,17 @@
 <template>
-    <section class="login animatedA" :class="{zoomIn:options.is_l_true,zoomOut:options.is_l_false}" v-if="isLoginDialog">
+    <section
+        class="login animatedA"
+        :class="{zoomIn:options.is_l_true,zoomOut:options.is_l_false}"
+        v-if="isLoginDialog"
+    >
         <i @click="closeLoginDialog"></i>
         <img src="../../static/images/login_bg.png" alt />
         <form action>
             <ul>
                 <li>
-                    <label for="賬號">賬號</label>
                     <input type="text" v-model="options.account" />
                 </li>
                 <li>
-                    <label for="密碼">密碼</label>
                     <input type="password" v-model="options.password" />
                 </li>
                 <li>
@@ -51,23 +53,23 @@ export default {
         },
         login(network) {
             let provider = hello(network);
-            let type='';
-            let typeId = '';
+            let type = "";
+            let typeId = "";
             provider.login().then(
                 response => {
                     console.log(response, response.id);
                     // 在这里利用第三方登录返回的数据
-                    if(network == "facebook"){
-                        type = 'FaceBook';
-                        typeId = 'response.id';
-                    } else if(network == "facebook") {
-                        type = 'Google';
-                        typeId = 'response.id';
+                    if (network == "facebook") {
+                        type = "FaceBook";
+                        typeId = "response.id";
+                    } else if (network == "facebook") {
+                        type = "Google";
+                        typeId = "response.id";
                     }
                     axios
-                        .post("http://luandou.gamemorefun.net/api/login",{
+                        .post("http://luandou.gamemorefun.net/api/login", {
                             account: response.id,
-                            password: '',
+                            password: "",
                             type: type
                         })
                         .then(result => {
@@ -92,7 +94,7 @@ export default {
 <style lang="stylus" scoped>
 .login {
     position: fixed;
-    z-index: 10;
+    z-index: 2;
     top: 25%;
 }
 
@@ -124,22 +126,22 @@ form {
 
         &.btn_login {
             width: 2.8rem;
-            height: 0.6rem;
-            top: 3.69rem;
+            height: 0.8rem;
+            top: 3.63rem;
             left: 50%;
             margin-left: -1.4rem;
         }
 
         &.btn_fb {
-            width: 0.6rem;
-            height: 0.7rem;
-            left: 2.5rem;
+            width: 0.8rem;
+            height: 0.8rem;
+            left: 2.45rem;
             top: 4.9rem;
         }
 
         &.btn_gp {
-            width: 0.65rem;
-            height: 0.7rem;
+            width: 0.8rem;
+            height: 0.8rem;
             left: 4.3rem;
             top: 4.9rem;
         }
@@ -147,10 +149,10 @@ form {
 
     ul {
         position: absolute;
-        width: 4.6rem;
+        width: 3.6rem;
         height: 1.3rem;
         left: 50%;
-        margin-left: -2.3rem;
+        margin-left: -1.3rem;
         top: 1.7rem;
 
         li {
@@ -177,9 +179,10 @@ form {
             }
 
             input {
-                padding-left: 0.2rem;
-                background: none;
+                width: 100%;
+                height: 0.45rem;
                 border: none;
+                text-align: center;
             }
 
             a {

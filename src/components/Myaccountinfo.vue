@@ -42,7 +42,7 @@ export default {
 .myAccountInfo
   position: fixed
   top: 25%
-  z-index: 9999
+  z-index: 2
   i
     display: inline-block
     width: 0.64rem

@@ -6,7 +6,7 @@
             <div class="tips">{{tipsText}}</div>
             <input type="text" placeholder="輸入暱稱查詢戰力" v-model="searchText" />
             <div class="list" v-for="(item,index) in filterList" :key="index">
-                <span>{{index+1}}</span>
+                <span>{{indexSelf}}</span>
                 <span>{{item.sname}}</span>
                 <span>{{item.uname}}</span>
                 <span>{{item.power | valueComputed}}</span>
@@ -48,6 +48,7 @@ export default {
             tipsText: "請輸入暱稱查詢！",
             username: "",
             power: "",
+            indexSelf:"",
             list: []
         };
     },
@@ -68,13 +69,12 @@ export default {
                 var data = [];
                 // 精確查詢
                 this.rankData.map((item, i, a) => {
-                    // console.log('相等',item,i,a);
                     if (item.uname == this.searchText) {
+                        this.indexSelf = i+1;
                         data.push(item);
-                        // return item;
                     }
                 });
-                console.log("相等的數據", data);
+                
                 if (data === undefined || data.length === 0) {
                     this.isTipsShow = true;
                     this.tipsText = "未上榜，請再接再厲!";
@@ -100,7 +100,7 @@ export default {
             let t = this;
 
             fetch(
-                "https://119.28.177.29/user_login/api.php?action=query_server_user_power"
+                "https://tj.gamemorefun.com/api/server/trans/heros/rank"
             )
                 .then(response => response.json())
                 .then(data => {
@@ -222,13 +222,14 @@ export default {
         input {
             width: 100%;
             height: 0.4rem;
-            padding-left: 0.1rem;
+            line-height 0.4rem;
             font-weight: 700;
             font-size: 0.24rem;
             color: #444444;
             background: none;
             border: none;
             text-align: center;
+            padding: 0 .2rem;
         }
 
         .list {

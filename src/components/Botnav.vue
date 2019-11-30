@@ -36,7 +36,7 @@ export default {
 <style lang="stylus" scoped>
 ul {
   position: fixed;
-  z-index :1;
+  z-index :2;
   left: 0;
   bottom: 0;
   display: flex;

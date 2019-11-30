@@ -46,6 +46,7 @@ export default {
             this.$emit("closeSelectServerDialog");
         },
         choose(e) {
+
             var server_id = e.target.value;
             this.server_id = server_id;
 
@@ -66,11 +67,12 @@ export default {
 
             this.options.roleName = this.options.selected.RoleName;
             this.options.roleId = this.options.selected.RoleId;
-            
             this.$emit("choseServer", this.server_id, this.options.roleName);
+
             localStorage.setItem("serverId", this.server_id);
             localStorage.setItem("roleId", this.options.roleId);
             localStorage.setItem("roleName", this.options.roleName);
+            
         }
     }
 };
@@ -80,7 +82,7 @@ export default {
 .selectServer {
     position: fixed;
     top: 25%;
-    z-index: 10;
+    z-index :2;
     i {
         display: inline-block;
         width: 0.64rem;

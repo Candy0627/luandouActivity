@@ -5,11 +5,14 @@
         v-if="isGetJinjangDialog"
     >
         <i @click="closeGetJinjiangDialog"></i>
-        <img src="/static/images/get_ma_bg.png" alt />
+        <img src="/static/images/jj_getma_dialog.png" alt />
 
-        <span class="text" id="text">{{options.$sdk_jj}}</span>
-
-        <a href="javascript:;" class="btn_getvirtualcode" @click="copyText()">點擊複製</a>
+        <input type="text" class="text" v-model="options.$sdk_jj" readonly>
+        <button class="btn_getvirtualcode" type="button"
+            v-clipboard:copy="options.$sdk_jj"
+            v-clipboard:success="onCopy"
+            v-clipboard:error="onError">Copy!</button>
+       
     </section>
 </template>
 
@@ -25,28 +28,12 @@ export default {
         closeGetJinjiangDialog() {
             this.$emit("closeGetJinjiangDialog");
         },
-        copyText() {
-            var text = document.getElementById("text").innerText;
-            // var input = document.getElementById("input");
-            // input.value = text; // 修改文本框的内容
-            // input.select(); // 选中文本
-            document.execCommand("copy"); // 执行浏览器复制命令
-            this.$layer.msg("复制成功");
+        onCopy(e) {
+            this.$layer.msg("複製成功！");
         },
-        // onCopy(e) {
-        //     console.log('success', e);
-        //     this.$message({
-        //         message: "复制成功！",
-        //         type: "success"
-        //     });
-        // },
-        // onError(e) {
-        //     console.log('success', e);
-        //     this.$message({
-        //         message: "复制失败！",
-        //         type: "error"
-        //     });
-        // }
+        onError(e) {
+            this.$layer.msg("複製失敗！");
+        }
     }
 };
 </script>
@@ -54,7 +41,7 @@ export default {
 <style lang="stylus" scoped>
 .virtual_code_dialog {
     position: fixed;
-    z-index: 999999;
+    z-index: 2;
     top: 25%;
 
     i {
@@ -70,21 +57,22 @@ export default {
 
     .text {
         position: absolute;
-        top: 2.5rem;
+        top: 2.8rem;
         width: 5.8rem;
         height: 0.66rem;
         left: 50%;
         margin-left: -2.9rem;
         text-align: center;
         line-height: 0.66rem;
-        color:#ef3a2e
+        color:#ef3a2e;
+        background: none;
     }
 
     .btn_getvirtualcode {
         position: absolute;
-        top: 3.88rem;
+        top: 3.98rem;
         width: 2.8rem;
-        height: 0.66rem;
+        height: 0.78rem;
         left: 50%;
         margin-left: -1.4rem;
         text-align: center;

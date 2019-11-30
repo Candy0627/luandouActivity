@@ -35,7 +35,7 @@ export default {
 <style lang="stylus" scoped>
 .login
     position: fixed
-    z-index: 999999
+    z-index: 2
     top: 25%
     i
         display: inline-block
