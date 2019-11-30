@@ -81,6 +81,14 @@ export default {
                 this.isBtnVideo = true;
                 v.pause();
             }
+            // 监控视频播放结束后出现播放按钮
+            video.addEventListener(
+                "ended",
+                () => {
+                    this.isBtnVideo = true;
+                },
+                false
+            );
         },
         videoActive() {
             var v = document.getElementById("video");
