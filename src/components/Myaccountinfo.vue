@@ -1,5 +1,5 @@
 <template>
-  <section class="login myAccountInfo animatedA" :class="{zoomIn:options.is_a_true,zoomOut:options.is_a_false}" v-if="isMyAccountInfoDialog">
+  <section class="login myAccountInfo animatedA" :class="{zoomIn:options.is_a_true,zoomOut:options.is_a_false}" v-if="options.isMyAccountInfoDialog">
     <i @click="closeMyAccountInfoDialog"></i>
     <img src="/static/images/server_bg.png" alt />
     <form action>
@@ -12,7 +12,7 @@
         </li>
       </ul>
       <a href="javascript:;" class="btn_confirm" @click="switchServer()">切换伺服器</a>
-      <a href="javascript:;" class="btn_cancel" @click="accountOut()">账号登出</a>
+      <a href="javascript:;" class="btn_cancel" @click="loginOut()">账号登出</a>
     </form>
   </section>
 </template>
@@ -20,7 +20,8 @@
 <script>
 export default {
   name: "HomeMyaccountdialog",
-  props: ["isMyAccountInfoDialog", "options"],
+  props: ["options"],
+  inject:['reload'],
   data: function() {
     return {}
   },
@@ -29,10 +30,34 @@ export default {
         this.$emit('closeMyAccountInfoDialog');
     },
     switchServer() {
-      this.$emit("switchServer");
+        this.options.isMyAccountInfoDialog = false;
+        this.options.is_a_true = false;
+        this.options.is_a_false = true;
+
+        this.options.isSelectServerDialog = true;
+        this.options.is_s_true = true;
+        this.options.is_s_false = false;
     },
-    accountOut() {
-      this.$emit("accountOut");
+    loginOut() {
+        this.$layer.msg("已登出");
+        this.options.myAccountInfo = "登錄賬號";
+        this.options.isMyAccountInfoDialog = false;
+        this.options.isMaskShow = false;
+        this.options.is_a_true = false;
+        this.options.is_a_false = true;
+        localStorage.removeItem('userName');
+        localStorage.removeItem('token');
+        localStorage.removeItem('uuid');
+        localStorage.removeItem('roleName');
+        localStorage.removeItem('roleId');
+        localStorage.removeItem('serverId');
+
+        localStorage.removeItem('serverInfo');
+        localStorage.removeItem('serverInfoSelected');
+        
+
+        this.reload();
+        
     }
   }
 };

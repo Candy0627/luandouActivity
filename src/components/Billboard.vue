@@ -12,12 +12,6 @@
                 <span>{{item.power | valueComputed}}</span>
             </div>
         </div>
-        <dl>
-            <dt>排名</dt>
-            <dt>區服</dt>
-            <dt>暱稱</dt>
-            <dt>戰力</dt>
-        </dl>
         <ul class="moreRank">
             <li v-for="(item,index) in rankData" :key="index">
                 <span>

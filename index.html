@@ -26,21 +26,16 @@
                 
             } else {
                 window.location.href = 'pc_index.html';
-                // window.location= 'index.html';
             }
         }
-        browserRedirect();//调用自身，页面一打开就开始跳转
+        browserRedirect();
     </script>
     <script>
-        /**
-         * 引入facebook分享sdk
-         */
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s);
             js.id = id;
-            //下面填入一个你的app id，如果还没，请在fb开发者平台注册一个
             js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=2189015318014723";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
@@ -50,7 +45,6 @@
 
 <body>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
 </body>
 
 </html>

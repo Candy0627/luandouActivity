@@ -2,7 +2,7 @@
     <section
         class="virtual_code_dialog animatedA"
         :class="{zoomIn:options.is_jj_true,zoomOut:options.is_jj_false}"
-        v-if="isGetJinjangDialog"
+        v-if="options.isGetJinjangDialog"
     >
         <i @click="closeGetJinjiangDialog"></i>
         <img src="/static/images/jj_getma_dialog.png" alt />
@@ -19,7 +19,7 @@
 <script>
 export default {
     name: "HomeGetjinjiangdialog",
-    props: ["options", "isGetJinjangDialog"],
+    props: ["options"],
     data: function() {
         return {};
     },

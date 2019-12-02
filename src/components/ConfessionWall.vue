@@ -59,8 +59,14 @@ export default {
         };
     },
     mounted() {
+        var v = document.getElementById("video");
+        var c = document.getElementsByTagName('canvas');
+        if(c){
+            c.offsetWidth = v.offsetWidth;
+        }
         this.winnersList();
         this.set_barrage();
+        
     },
     filters: {
         //自定义时间过滤器
@@ -74,6 +80,10 @@ export default {
         },
         openVideo() {
             var v = document.getElementById("video");
+            var c = document.getElementsByTagName('canvas');
+            if(c){
+                c.offsetWidth = v.offsetWidth;
+            }
             if (v.paused) {
                 this.isBtnVideo = false;
                 v.play();
@@ -103,7 +113,8 @@ export default {
         set_barrage() {
             var that = this;
             const container = document.getElementById("container");
-
+            const v = document.getElementById("video");
+            // container.offsetWidth = v.offsetWidth;
             const barrage = new Barrage({
                 container: container,
                 config: {
@@ -265,7 +276,7 @@ export default {
                 z-index: 1;
 
                 &:nth-child(1) {
-                    width: 6.5rem;
+                    width: 6.49rem;
                     height: 0.4rem;
                     top: -0.25rem;
                     left: -0.06rem;

@@ -1,5 +1,5 @@
 <template>
-    <section class="virtual_code_dialog animatedA" :class="{zoomIn:options.is_wj_true,zoomOut:options.is_wj_false}" v-if="isGetMaDialog">
+    <section class="virtual_code_dialog animatedA" :class="{zoomIn:options.is_wj_true,zoomOut:options.is_wj_false}" v-if="options.isGetMaDialog">
         <i @click="closeGetMaDialog"></i>
         <img src="/static/images/get_ma_bg.png" alt />
         <span class="text">
@@ -13,7 +13,7 @@
 <script>
 export default {
     name: "HomeGetmadialog",
-    props: ["options","isGetMaDialog"],
+    props: ["options"],
     data: function() {
         return {};
     },

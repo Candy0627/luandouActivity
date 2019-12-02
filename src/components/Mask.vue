@@ -1,11 +1,11 @@
 <template>
-  <div class="mask" v-show="isMaskShow"></div>
+  <div class="mask" v-show="options.isMaskShow"></div>
 </template>
 
 <script>
 export default {
   name: "HomeMask",
-  props:['isMaskShow']
+  props:['options']
 };
 </script>
 
